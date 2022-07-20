@@ -6,6 +6,7 @@ const gameBoard = (() => {
   boardDOM.addEventListener("click", (e) => {
     if (e.target.dataset.cell != null) {
       Board[e.target.dataset.cell] = "x";
+      display.draw();
     }
   });
   return { Board, boardDOM };

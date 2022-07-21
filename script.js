@@ -3,26 +3,31 @@ const gameBoard = (() => {
 
   const boardDOM = document.getElementById("board");
 
+  const getArrayInfo = (index) => {
+    //i dont want users accessing my array
+    return Board[index];
+  };
+
   boardDOM.addEventListener("click", (e) => {
     if (Board[e.target.dataset.cell] == null) {
       Board[e.target.dataset.cell] = gameController.getTurn();
       display.draw();
-      gameController.checkForGame();
+      // gameController.checkForGame();
       gameController.changeTurn();
     } else {
       return;
     }
   });
-  return { Board, boardDOM };
+  return { getArrayInfo, boardDOM };
 })();
 
 const display = (() => {
   const draw = () => {
-    for (i = 0; i < gameBoard.Board.length; i++) {
-      if (gameBoard.Board[i] != null) {
+    for (i = 0; i < 9; i++) {
+      if (gameBoard.getArrayInfo(i) != null) {
         gameBoard.boardDOM
           .querySelector(`[data-cell="${i}"]`) //gives a different class to the square that has been selected, so i can go into css and make .classname to have a drawing or some shit
-          .classList.add(gameBoard.Board[i]);
+          .classList.add(gameBoard.getArrayInfo(i));
       }
     }
   };
@@ -84,8 +89,7 @@ const players = (number) => {};
 
 function asd() {
   //troubleshooting, ignore
-  for (i = 0; i < gameBoard.Board.length; i++)
-    console.log(i + ": " + gameBoard.Board[i]);
+  for (i = 0; i < 9; i++) console.log(i + ": " + gameBoard.getArrayInfo(i));
 }
 
 window.onload = gameController.changeTurn(); //must be here, signs OF GOOD CODING AM I RIGHT FELLAS

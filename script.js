@@ -37,7 +37,9 @@ const display = (() => {
 })();
 
 const gameController = (() => {
-  //https://gist.github.com/perlmonger42/3543760
+  let moves = 0;
+  let currentTurn = "x";
+
   const checkForGame = () => {
     if (
       winCondition(
@@ -83,6 +85,12 @@ const gameController = (() => {
     ) {
       alert(`The player with ${getTurn()} wins`);
       location.reload(); //TEMPORARY
+    } else {
+      moves++;
+      if (moves == 9) {
+        alert("It's a tie");
+        location.reload(); //TEMPORARY
+      }
     }
   };
 
@@ -93,8 +101,6 @@ const gameController = (() => {
       }
     }
   };
-
-  let currentTurn = "x";
 
   const changeTurn = () => {
     if (gameController.currentTurn == "x") {
@@ -111,7 +117,7 @@ const gameController = (() => {
   return { checkForGame, getTurn, changeTurn }; //try not to allow users to change the turn
 })();
 
-const players = (number) => {};
+const players = () => {};
 
 function asd() {
   //troubleshooting, ignore

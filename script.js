@@ -1,5 +1,7 @@
 const BoardLength = 9;
 
+window.onload = gameController.changeTurn(); //must be here, signs OF GOOD CODING AM I RIGHT FELLAS
+
 const gameBoard = (() => {
   const Board = new Array(9);
 
@@ -8,9 +10,21 @@ const gameBoard = (() => {
     return Board[index];
   };
 
+  const wipeBoard = () => {
+    Board.splice(0, Board.length);
+    const list = gameBoard.boardDOM.querySelectorAll("[data-cell]");
+    list.forEach((element) => {
+      element.classList.remove("x");
+      element.classList.remove("o");
+    });
+  };
+
   const boardDOM = document.getElementById("board");
 
   boardDOM.addEventListener("click", (e) => {
+    if (gameController.getWincon() == true) {
+      return;
+    }
     if (Board[e.target.dataset.cell] == null) {
       Board[e.target.dataset.cell] = gameController.getTurn();
       display.draw();
@@ -20,7 +34,8 @@ const gameBoard = (() => {
       return;
     }
   });
-  return { getArrayInfo, boardDOM };
+
+  return { getArrayInfo, boardDOM, wipeBoard };
 })();
 
 const display = (() => {
@@ -33,12 +48,21 @@ const display = (() => {
       }
     }
   };
+
   return { draw };
 })();
 
 const gameController = (() => {
+  let winCon = false;
   let moves = 0;
-  let currentTurn = "x";
+  let currentTurn;
+  const restart = document.querySelector(".restartBTN");
+
+  restart.addEventListener("click", () => {
+    gameBoard.wipeBoard();
+    moves = 0; //resets tie condition
+    winCon = false;
+  });
 
   const checkForGame = () => {
     if (
@@ -83,13 +107,12 @@ const gameController = (() => {
         gameBoard.getArrayInfo(5)
       )
     ) {
-      alert(`The player with ${getTurn()} wins`);
-      location.reload(); //TEMPORARY
+      alert(`Player ${getTurn()} wins`);
+      winCon = true;
     } else {
       moves++;
       if (moves == 9) {
         alert("It's a tie");
-        location.reload(); //TEMPORARY
       }
     }
   };
@@ -114,15 +137,15 @@ const gameController = (() => {
     return gameController.currentTurn;
   };
 
-  return { checkForGame, getTurn, changeTurn }; //try not to allow users to change the turn
-})();
+  const getWincon = () => {
+    return winCon;
+  };
 
-const players = () => {};
+  return { checkForGame, getTurn, changeTurn, getWincon }; //try not to allow users to change the turn
+})();
 
 function asd() {
   //troubleshooting, ignore
   for (i = 0; i < BoardLength; i++)
     console.log(i + ": " + gameBoard.getArrayInfo(i));
 }
-
-window.onload = gameController.changeTurn(); //must be here, signs OF GOOD CODING AM I RIGHT FELLAS

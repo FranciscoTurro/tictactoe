@@ -16,11 +16,9 @@
 }
 
 .x {
-  background-image: url(images/cross.png);
-  background-repeat: no-repeat;
+  background-color: red;
 }
 
 .o {
-  background-image: url(images/circle.png);
-  background-repeat: no-repeat;
+  background-color: blue;
 }

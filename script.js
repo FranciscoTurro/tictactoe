@@ -1,7 +1,5 @@
 const BoardLength = 9;
 
-window.onload = gameController.changeTurn(); //must be here, signs OF GOOD CODING AM I RIGHT FELLAS
-
 const gameBoard = (() => {
   const Board = new Array(9);
 
@@ -30,26 +28,13 @@ const gameBoard = (() => {
       display.draw();
       gameController.checkForGame();
       gameController.changeTurn();
+      display.updateInfo();
     } else {
       return;
     }
   });
 
   return { getArrayInfo, boardDOM, wipeBoard };
-})();
-
-const display = (() => {
-  const draw = () => {
-    for (i = 0; i < BoardLength; i++) {
-      if (gameBoard.getArrayInfo(i) != null) {
-        gameBoard.boardDOM
-          .querySelector(`[data-cell="${i}"]`) //gives a different class to the square that has been selected, so i can go into css and make .classname to have a drawing or some shit
-          .classList.add(gameBoard.getArrayInfo(i));
-      }
-    }
-  };
-
-  return { draw };
 })();
 
 const gameController = (() => {
@@ -62,6 +47,8 @@ const gameController = (() => {
     gameBoard.wipeBoard();
     moves = 0; //resets tie condition
     winCon = false;
+    gameController.currentTurn = "x";
+    display.updateInfo();
   });
 
   const checkForGame = () => {
@@ -142,6 +129,28 @@ const gameController = (() => {
   };
 
   return { checkForGame, getTurn, changeTurn, getWincon }; //try not to allow users to change the turn
+})();
+
+window.onload = gameController.changeTurn(); //must be here, signs OF GOOD CODING AM I RIGHT FELLAS
+
+const display = (() => {
+  const info = document.querySelector(".info");
+
+  const updateInfo = () => {
+    info.textContent = `It's ${gameController.getTurn()}'s move`;
+  };
+
+  const draw = () => {
+    for (i = 0; i < BoardLength; i++) {
+      if (gameBoard.getArrayInfo(i) != null) {
+        gameBoard.boardDOM
+          .querySelector(`[data-cell="${i}"]`) //gives a different class to the square that has been selected, so i can go into css and make .classname to have a drawing or some shit
+          .classList.add(gameBoard.getArrayInfo(i));
+      }
+    }
+  };
+
+  return { draw, updateInfo };
 })();
 
 function asd() {

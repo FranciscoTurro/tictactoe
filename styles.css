@@ -1,3 +1,10 @@
+@import url("https://fonts.googleapis.com/css2?family=VT323&display=swap");
+
+* {
+  font-family: "VT323", monospace;
+  background-color: #fcf7e8;
+}
+
 #main {
   display: flex;
   flex-direction: column;
@@ -6,8 +13,9 @@
 
 #board {
   display: grid;
-  grid-template-columns: repeat(3, 80px);
-  grid-template-rows: repeat(3, 80px);
+  grid-template-columns: repeat(3, 100px);
+  grid-template-rows: repeat(3, 100px);
+  margin-top: 20px;
 }
 
 .square {
@@ -16,9 +24,33 @@
 }
 
 .x {
-  background-color: red;
+  background-image: url(images/cross.png);
+  background-repeat: no-repeat;
+  background-color: rgba(255, 0, 0, 0.5);
+  background-position: center;
 }
 
 .o {
-  background-color: blue;
+  background-image: url(images/circle.png);
+  background-repeat: no-repeat;
+  background-color: rgba(0, 0, 255, 0.5);
+  background-position: center;
+}
+
+button {
+  margin: 15px;
+  border-radius: 0.5em;
+  padding: 15px;
+  font-size: 1em;
+  cursor: pointer;
+  background-color: white;
+}
+
+p {
+  margin: 0;
+  font-size: 6rem;
+}
+
+.info {
+  font-size: 2rem;
 }

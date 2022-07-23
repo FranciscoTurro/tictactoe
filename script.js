@@ -131,7 +131,8 @@ const gameController = (() => {
   return { checkForGame, getTurn, changeTurn, getWincon }; //try not to allow users to change the turn
 })();
 
-window.onload = gameController.changeTurn(); //must be here, signs OF GOOD CODING AM I RIGHT FELLAS
+window.onload = gameController.changeTurn();
+//must be here, signs OF GOOD CODING AM I RIGHT FELLAS
 
 const display = (() => {
   const info = document.querySelector(".info");
